@@ -11,13 +11,21 @@ namespace AlarmNotificationService
 {
     public class Program
     {
+        private static string? configurationPath;
         public static void Main(string[] args)
         {
+            configurationPath = Environment.GetEnvironmentVariable("alarm_config_location");
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostContext,config) => {
+                    if (configurationPath != null && configurationPath.Length > 0)
+                    {
+                        config.AddJsonFile(configurationPath, false, false);
+                    }
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     IConfiguration configuration = hostContext.Configuration;

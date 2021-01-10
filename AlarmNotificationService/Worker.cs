@@ -57,7 +57,7 @@ namespace AlarmNotificationService
             string zone_description = "Unknown";
             if (message.TryParse(out alarm_channel))
             {
-                zone_description = zone_descriptions[alarm_channel - 1];
+                zone_description = zone_descriptions[alarm_channel];
             }
 
             if (_chat_Id.HasValue)
