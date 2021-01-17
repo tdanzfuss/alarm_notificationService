@@ -17,6 +17,7 @@ namespace AlarmNotificationService
     {
         private readonly ILogger<Worker> _logger;
         private readonly IConnectionMultiplexer _redis;
+        private IDatabase _redis_db;
         private readonly AlarmConfig _alarmConfig;
         private TelegramBotClient _botClient;
         private string[] zone_descriptions;
@@ -28,6 +29,8 @@ namespace AlarmNotificationService
             _redis = connex;
             _alarmConfig = alarmConfig;
             zone_descriptions = _alarmConfig.Zones;
+
+            _redis_db = _redis.GetDatabase();
             _botClient = new TelegramBotClient(_alarmConfig.BotAPIKey);
             var me = _botClient.GetMeAsync().Result;
             _logger.LogInformation("Telegram bot initialised: " + me.FirstName);
@@ -39,6 +42,13 @@ namespace AlarmNotificationService
             var redis_subscriber = _redis.GetSubscriber();
             redis_subscriber.Subscribe("ALARM_TRIGGER", alarmTriggerReceived);
             redis_subscriber.Subscribe("IMAGE_CAPTURED", imageReceived);
+            redis_subscriber.Subscribe("PERSON_DETECTED", personDetectedReceived);
+
+            // Initialize the chatID if we already have one
+            RedisValue tmpChatID = _redis_db.StringGet("TELEGRAM_CHAT_ID");
+
+            if (!tmpChatID.IsNullOrEmpty)
+                _chat_Id = long.Parse(tmpChatID.ToString());
 
             // start botclient
             _botClient.StartReceiving();
@@ -95,12 +105,28 @@ namespace AlarmNotificationService
             }
         }
 
+        protected async void personDetectedReceived(RedisChannel channel, RedisValue message)
+        {
+            // InputOnlineFile iof = new InputOnlineFile();
+            if (_chat_Id.HasValue)
+            {
+                await _botClient.SendTextMessageAsync(
+                    chatId: _chat_Id.Value,
+                      text: String.Format("Object detection detected a person! What do you want to do?"));
+            }
+        }
+
         private async void _botClient_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
             if (e.Message.Text != null)
             {
-                // register this as a client who will receive Alarm notifications
-                _chat_Id = e.Message.Chat.Id;
+                // If the chat id is empty we set it, else we do nothing...
+                if (!_chat_Id.HasValue)
+                {
+                    _chat_Id = e.Message.Chat.Id;
+                    _redis_db.StringSet("TELEGRAM_CHAT_ID", _chat_Id);
+
+                }
 
                 await _botClient.SendTextMessageAsync(
                     chatId: e.Message.Chat.Id,

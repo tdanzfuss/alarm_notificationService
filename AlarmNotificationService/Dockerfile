@@ -1,6 +1,6 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 # BUILD with buildx to be able to run on PI https://www.docker.com/blog/multi-arch-images/
-# docker buildx build -f "C:\Users\tdanzfuss\source\repos\AlarmNotificationService\AlarmNotificationService\Dockerfile" --platform linux/amd64,linux/arm/v7 -t tdanzfuss/alarmnotificationservice:latest --push .
+# docker buildx build -f "C:\Users\tdanzfuss\source\repos\AlarmNotificationService\AlarmNotificationService\Dockerfile" --platform linux/amd64,linux/arm/v7 -t tdanzfuss/alarmnotificationservice:armv7 --push .
 
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm32v7 AS base
 WORKDIR /app

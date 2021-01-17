@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HYUvepGKItNhpGMrIz/fgPp21+mV/pb/46CLkvMhcMelRZiZG1cjONN49HSM1CRZX4ygGq3e6saLvxg54lIHxw==",
+  "dgSpecHash": "VDqbfLQkkmcRp5wt7ebPkRvK1083+78y1yFe4EfV1CFDZF+SupzDVwPpUwAmN4bhIdoVyKrIbgyChPgkTsuVGg==",
   "success": true,
   "projectFilePath": "C:\\Users\\tdanzfuss\\source\\repos\\AlarmNotificationService\\AlarmNotificationService\\AlarmNotificationService.csproj",
   "expectedPackageFiles": [
@@ -124,9 +124,7 @@
     "C:\\Users\\tdanzfuss\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\tdanzfuss\\.nuget\\packages\\telegram.bot\\15.7.1\\telegram.bot.15.7.1.nupkg.sha512",
-    "C:\\Users\\tdanzfuss\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
-    "C:\\Users\\tdanzfuss\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.10\\microsoft.netcore.app.host.win-x64.3.1.10.nupkg.sha512"
+    "C:\\Users\\tdanzfuss\\.nuget\\packages\\telegram.bot\\15.7.1\\telegram.bot.15.7.1.nupkg.sha512"
   ],
   "logs": []
 }
